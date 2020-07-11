@@ -40,16 +40,25 @@ int main()
     glViewport(0, 0, WIDTH, HEIGHT);
     glfwSetKeyCallback(window, key_callback);
 
+    int nrAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+    std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+
     // build and compile our shader program
     // ------------------------------------
-    ShaderLoader TriangleShader("App/src/shaders/Triangle.vert", "App/src/shaders/Triangle.frag");
+    ShaderLoader TriangleShader("src/shaders/Triangle.vert", "src/shaders/Triangle.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices[] = {
-        -0.5f, -0.5f, 0.0f, // left  
-         0.5f, -0.5f, 0.0f, // right 
-         0.0f,  0.5f, 0.0f  // top   
+    float vertexPositions[] = {
+        // first triangle
+        -0.9f, -0.5f, 0.0f,  1.0f,  0.0f, 0.0f,  // left 
+        -0.0f, -0.5f, 0.0f,  0.0f,  1.0f, 0.0f,  // right
+        -0.45f, 0.5f, 0.0f,  0.0f,  0.0f, 1.0f,  // top 
+        // second triangle
+         0.0f, -0.5f, 0.0f, 0.0f,  0.0f, 1.0f,  // left
+         0.9f, -0.5f, 0.0f, 1.0f,  0.0f, 0.0f,  // right
+         0.45f, 0.5f, 0.0f, 0.0f,  1.0f, 0.0f   // top 
     };
 
     unsigned int VBO, VAO;
@@ -59,10 +68,14 @@ int main()
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -88,7 +101,7 @@ int main()
         // draw our first triangle
         TriangleShader.use();
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
         // glBindVertexArray(0); // no need to unbind it every time 
 
         // Swap the screen buffers
