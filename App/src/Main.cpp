@@ -2,47 +2,18 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Context.h"
 #include "shaders/ShaderLoader.h"
 
 // Function prototypes
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-// Window dimensions
-const GLuint WIDTH = 800, HEIGHT = 600;
-
 GLboolean wireframe = GL_FALSE;
 
 int main()
 {
-    std::cout << "Starting GLFW context, OpenGL 3.3" << std::endl;
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-    // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize OpenGL context" << std::endl;
-        return -1;
-    }
-
-    glViewport(0, 0, WIDTH, HEIGHT);
-    glfwSetKeyCallback(window, key_callback);
-
-    int nrAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+    Context ctx;
+    glfwSetKeyCallback(ctx.getWindow(), key_callback);
 
     // build and compile our shader program
     // ------------------------------------
@@ -88,7 +59,7 @@ int main()
     // render loop
     // -----------
 
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(ctx.getWindow()))
     {
         // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
         glfwPollEvents();
@@ -105,7 +76,7 @@ int main()
         // glBindVertexArray(0); // no need to unbind it every time 
 
         // Swap the screen buffers
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(ctx.getWindow());
     }
 
     glDeleteVertexArrays(1, &VAO);

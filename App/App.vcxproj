@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dependencies\glad\src\glad.c" />
+    <ClCompile Include="src\Context.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\shaders\ShaderLoader.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="dependencies\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="dependencies\glfw\include\GLFW\glfw3.h" />
     <ClInclude Include="dependencies\glfw\include\GLFW\glfw3native.h" />
+    <ClInclude Include="src\Context.h" />
     <ClInclude Include="src\shaders\ShaderLoader.h" />
   </ItemGroup>
   <ItemGroup>
