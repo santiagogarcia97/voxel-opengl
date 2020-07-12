@@ -18,10 +18,10 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\dependencies\glad\src\glad.c">
+    <ClCompile Include="src\shaders\ShaderLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\shaders\ShaderLoader.cpp">
+    <ClCompile Include="dependencies\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,9 +29,26 @@
     <ClInclude Include="src\shaders\ShaderLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dependencies\glad\include\glad\glad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\glad\include\KHR\khrplatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\glfw\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\glfw\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\Triangle.vert" />
     <None Include="src\shaders\Triangle.frag" />
+    <None Include="dependencies\glfw\lib-vc2019\glfw3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="dependencies\glfw\lib-vc2019\glfw3.lib" />
+    <Library Include="dependencies\glfw\lib-vc2019\glfw3dll.lib" />
   </ItemGroup>
 </Project>

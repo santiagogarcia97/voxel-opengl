@@ -74,29 +74,29 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\glad\include;$(SolutionDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\glad\include;$(SolutionDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\glad\include;$(SolutionDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\glad\include;$(SolutionDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)dependencies\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,16 +159,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\dependencies\glad\src\glad.c" />
+    <ClCompile Include="dependencies\glad\src\glad.c" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\shaders\ShaderLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\glad\include\glad\glad.h" />
+    <ClInclude Include="dependencies\glad\include\KHR\khrplatform.h" />
+    <ClInclude Include="dependencies\glfw\include\GLFW\glfw3.h" />
+    <ClInclude Include="dependencies\glfw\include\GLFW\glfw3native.h" />
     <ClInclude Include="src\shaders\ShaderLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="dependencies\glfw\lib-vc2019\glfw3.dll" />
     <None Include="src\shaders\Triangle.frag" />
     <None Include="src\shaders\Triangle.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="dependencies\glfw\lib-vc2019\glfw3.lib" />
+    <Library Include="dependencies\glfw\lib-vc2019\glfw3dll.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
