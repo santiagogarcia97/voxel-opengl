@@ -8,7 +8,7 @@
 // Function prototypes
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-GLboolean wireframe = GL_FALSE;
+bool wireframe = false;
 
 int main()
 {
@@ -96,7 +96,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         
         if (key == GLFW_KEY_SPACE) {
             glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_FILL : GL_LINE);
-            wireframe ^= GL_TRUE;
+            wireframe = !wireframe;
         }
     }
 }
