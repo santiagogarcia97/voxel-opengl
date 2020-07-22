@@ -20,3 +20,10 @@ void VertexArray::unbind()
 {
 	glBindVertexArray(0);
 }
+
+void VertexArray::addAttrib(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer)
+{
+	this->bind();
+	glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+	glEnableVertexAttribArray(index);
+}

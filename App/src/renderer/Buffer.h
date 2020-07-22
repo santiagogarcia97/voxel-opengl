@@ -11,8 +11,8 @@ private:
 public:
 	Buffer();
 	~Buffer();
-	void setVertex(float* vertex, unsigned int size);
-	void setElement(unsigned int* elements, unsigned int size);
+	void setVertex(float* vertex, std::size_t size);
+	void setElement(unsigned int* elements, std::size_t size);
 };
 
 #endif

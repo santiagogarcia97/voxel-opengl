@@ -2,7 +2,6 @@
 #define VERTEXARRAY_H
 
 #include <glad/glad.h>
-#include <iostream>
 
 class VertexArray
 {
@@ -13,6 +12,7 @@ public:
 	~VertexArray();
 	void bind();
 	void unbind();
+	void addAttrib(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 };
 
 #endif
