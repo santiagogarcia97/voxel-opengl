@@ -10,6 +10,7 @@
 #include "shaders/ShaderLoader.h"
 #include "renderer/Texture.h"
 #include "renderer/VertexArray.h"
+#include "renderer/Buffer.h"
 
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -24,7 +25,7 @@ int main()
     ShaderLoader TriangleShader("src/shaders/Triangle.vert", "src/shaders/Triangle.frag");
 
 
-    float vertexPositions[] = {
+    float vertex[] = {
         -0.9f, -0.5f, 0.0f,  1.0f,  0.0f, 0.0f,   0.0f, 0.0f, // bot left 
         -0.1f, -0.5f, 0.0f,  0.0f,  1.0f, 0.0f,   1.0f, 0.0f, // bot right
         -0.9f,  0.5f, 0.0f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f, // top left
@@ -36,23 +37,18 @@ int main()
          0.1f,  0.5f, 0.0f,  1.0f,  1.0f, 1.0f,   1.0f, 1.0f  // top right
     };
 
-    unsigned int indices[] = {  
+    unsigned int elements[] = {  
     0, 1, 3,   // first triangle
     3, 2, 0,    // second triangle
     4, 5, 7,
     7, 6, 4
     };
 
-    unsigned int VBO, EBO;
     VertexArray vao;
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+    Buffer buff;
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    buff.setVertex(vertex, sizeof(vertex));
+    buff.setElement(elements, sizeof(elements));
 
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -63,9 +59,6 @@ int main()
     // texture coord attribute
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
-
-    // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
@@ -101,8 +94,6 @@ int main()
         glfwSwapBuffers(ctx.getWindow());
     }
 
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
     // Terminates GLFW, clearing any resources allocated by GLFW.
     glfwTerminate();
     return 0;
