@@ -164,6 +164,7 @@
     <ClCompile Include="dependencies\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Context.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\renderer\Texture.cpp" />
     <ClCompile Include="src\shaders\ShaderLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -455,6 +456,7 @@
     <ClInclude Include="dependencies\glm\vector_relational.hpp" />
     <ClInclude Include="dependencies\stb_image\stb_image.h" />
     <ClInclude Include="src\Context.h" />
+    <ClInclude Include="src\renderer\Texture.h" />
     <ClInclude Include="src\shaders\ShaderLoader.h" />
   </ItemGroup>
   <ItemGroup>
