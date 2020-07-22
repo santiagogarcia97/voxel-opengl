@@ -9,6 +9,7 @@
 #include "Context.h"
 #include "shaders/ShaderLoader.h"
 #include "renderer/Texture.h"
+#include "renderer/VertexArray.h"
 
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -42,12 +43,10 @@ int main()
     7, 6, 4
     };
 
-    unsigned int VAO, VBO, EBO;
-    glGenVertexArrays(1, &VAO);
+    unsigned int VBO, EBO;
+    VertexArray vao;
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
@@ -70,7 +69,7 @@ int main()
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    glBindVertexArray(0);
+    vao.unbind();
 
     Texture Tex1("res/tex1.png");
     
@@ -95,14 +94,13 @@ int main()
         TriangleShader.setMat4("transform", &trans);
         
         Tex1.bind();
-        glBindVertexArray(VAO);
+        vao.bind();
         glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
 
         // Swap the screen buffers
         glfwSwapBuffers(ctx.getWindow());
     }
 
-    glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     // Terminates GLFW, clearing any resources allocated by GLFW.
