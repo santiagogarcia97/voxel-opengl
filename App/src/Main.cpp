@@ -15,12 +15,12 @@
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-bool wireframe = false;
+bool WIREFRAME = false;
 
 int main()
 {
-    Context ctx;
-    glfwSetKeyCallback(ctx.getWindow(), key_callback);
+    const Context ctx;
+    glfwSetKeyCallback(ctx.get_window(), key_callback);
 
     ShaderLoader TriangleShader("src/shaders/Triangle.vert", "src/shaders/Triangle.frag");
 
@@ -44,29 +44,29 @@ int main()
     7, 6, 4
     };
 
-    VertexArray vao;
-    Buffer buff;
+    const VertexArray vao;
+    const Buffer buff;
 
-    buff.setVertex(vertex, sizeof(vertex));
-    buff.setElement(elements, sizeof(elements));
+    buff.set_vertex(vertex, sizeof(vertex));
+    buff.set_element(elements, sizeof(elements));
 
     // position attribute
-    vao.addAttrib(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    vao.add_attrib(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     // color attribute
-    vao.addAttrib(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.add_attrib(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     // texture coord attribute
-    vao.addAttrib(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    vao.add_attrib(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    vao.unbind();
+    VertexArray::unbind();
 
     Texture Tex1("res/tex1.png");
     
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(ctx.getWindow()))
+    while (!glfwWindowShouldClose(ctx.get_window()))
     {
         // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
         glfwPollEvents();
@@ -81,14 +81,14 @@ int main()
         glm::mat4 trans = glm::mat4(1.0f);
         trans = glm::rotate(trans, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.0f, 0.0f, 1.0f));
         trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
-        TriangleShader.setMat4("transform", &trans);
+        TriangleShader.set_mat4("transform", &trans);
         
         Tex1.bind();
         vao.bind();
         glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
 
         // Swap the screen buffers
-        glfwSwapBuffers(ctx.getWindow());
+        glfwSwapBuffers(ctx.get_window());
     }
 
     // Terminates GLFW, clearing any resources allocated by GLFW.
@@ -105,8 +105,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             glfwSetWindowShouldClose(window, GL_TRUE);
         
         if (key == GLFW_KEY_SPACE) {
-            glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_FILL : GL_LINE);
-            wireframe = !wireframe;
+            glPolygonMode(GL_FRONT_AND_BACK, WIREFRAME ? GL_FILL : GL_LINE);
+            WIREFRAME = !WIREFRAME;
         }
     }
 }

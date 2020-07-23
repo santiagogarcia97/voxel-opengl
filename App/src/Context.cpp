@@ -1,4 +1,5 @@
 #include "Context.h"
+#include <iostream>
 
 Context::Context()
 {
@@ -10,27 +11,27 @@ Context::Context()
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    window = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL", NULL, NULL);
-    if (window == NULL)
+    m_Window = glfwCreateWindow(m_Width, m_Height, "OpenGL", nullptr, nullptr);
+    if (m_Window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
     }
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(m_Window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize OpenGL context" << std::endl;
     }
 
-    glViewport(0, 0, WIDTH, HEIGHT);
+    glViewport(0, 0, m_Width, m_Height);
 
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
     std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 }
 
-GLFWwindow* Context::getWindow()
+GLFWwindow* Context::get_window() const
 {
-    return window;
+    return m_Window;
 }

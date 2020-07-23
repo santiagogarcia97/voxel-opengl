@@ -1,27 +1,26 @@
 #include "Buffer.h"
-#include <iostream>
 
 Buffer::Buffer()
 {
-	glGenBuffers(1, &m_vbID);
-	glGenBuffers(1, &m_ebID);
+	glGenBuffers(1, &m_VbId);
+	glGenBuffers(1, &m_EbId);
 }
 
 Buffer::~Buffer()
 {
-	glDeleteBuffers(1, &m_vbID);
-	glDeleteBuffers(1, &m_vbID);
+	glDeleteBuffers(1, &m_VbId);
+	glDeleteBuffers(1, &m_EbId);
 }
 
-void Buffer::setVertex(float *vertex, std::size_t size)
+void Buffer::set_vertex(float *vertex, std::size_t size) const
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VbId);
 
 	glBufferData(GL_ARRAY_BUFFER, size, vertex, GL_STATIC_DRAW);
 }
 
-void Buffer::setElement(unsigned int *elements, std::size_t size)
+void Buffer::set_element(unsigned int *elements, std::size_t size) const
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EbId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, elements, GL_STATIC_DRAW);
 }

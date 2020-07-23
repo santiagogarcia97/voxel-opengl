@@ -3,14 +3,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
 #include "ShaderLoader.h"
 
-ShaderLoader::ShaderLoader(const char* vertexPath, const char* fragmentPath)
+ShaderLoader::ShaderLoader(const char* vertex_path, const char* frag_path)
 {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
@@ -23,8 +22,8 @@ ShaderLoader::ShaderLoader(const char* vertexPath, const char* fragmentPath)
     try
     {
         // open files
-        vShaderFile.open(vertexPath);
-        fShaderFile.open(fragmentPath);
+        vShaderFile.open(vertex_path);
+        fShaderFile.open(frag_path);
         std::stringstream vShaderStream, fShaderStream;
         // read file's buffer contents into streams
         vShaderStream << vShaderFile.rdbuf();
@@ -48,52 +47,47 @@ ShaderLoader::ShaderLoader(const char* vertexPath, const char* fragmentPath)
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vShaderCode, NULL);
     glCompileShader(vertex);
-    checkCompileErrors(vertex, "VERTEX");
+    check_compile_errors(vertex, "VERTEX");
     // fragment Shader
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &fShaderCode, NULL);
     glCompileShader(fragment);
-    checkCompileErrors(fragment, "FRAGMENT");
+    check_compile_errors(fragment, "FRAGMENT");
     // shader Program
-    ID = glCreateProgram();
-    glAttachShader(ID, vertex);
-    glAttachShader(ID, fragment);
-    glLinkProgram(ID);
-    checkCompileErrors(ID, "PROGRAM");
+    m_Id = glCreateProgram();
+    glAttachShader(m_Id, vertex);
+    glAttachShader(m_Id, fragment);
+    glLinkProgram(m_Id);
+    check_compile_errors(m_Id, "PROGRAM");
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
-// activate the shader
-// ------------------------------------------------------------------------
+
 void ShaderLoader::use()
 {
-    glUseProgram(ID);
-}
-// utility uniform functions
-// ------------------------------------------------------------------------
-void ShaderLoader::setBool(const std::string& name, bool value) const
-{
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
-}
-// ------------------------------------------------------------------------
-void ShaderLoader::setInt(const std::string& name, int value) const
-{
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-}
-// ------------------------------------------------------------------------
-void ShaderLoader::setFloat(const std::string& name, float value) const
-{
-    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+    glUseProgram(m_Id);
 }
 
-void ShaderLoader::setMat4(const std::string& name, glm::mat4* value) const
+void ShaderLoader::set_bool(const std::string& name, bool value) const
 {
-    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(*value));
+    glUniform1i(glGetUniformLocation(m_Id, name.c_str()), (int)value);
+}
+void ShaderLoader::set_int(const std::string& name, int value) const
+{
+    glUniform1i(glGetUniformLocation(m_Id, name.c_str()), value);
+}
+void ShaderLoader::set_float(const std::string& name, float value) const
+{
+    glUniform1f(glGetUniformLocation(m_Id, name.c_str()), value);
+}
+void ShaderLoader::set_mat4(const std::string& name, glm::mat4* value) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(m_Id, name.c_str()), 1, GL_FALSE, glm::value_ptr(*value));
 }
 
 
-void ShaderLoader::checkCompileErrors(unsigned int shader, std::string type)
+void ShaderLoader::check_compile_errors(unsigned int shader, std::string type)
 {
     int success;
     char infoLog[1024];

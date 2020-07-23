@@ -6,13 +6,13 @@
 
 class Buffer
 {
-private:
-	unsigned int m_vbID, m_ebID;
 public:
 	Buffer();
 	~Buffer();
-	void setVertex(float* vertex, std::size_t size);
-	void setElement(unsigned int* elements, std::size_t size);
+	void set_vertex(float* vertex, std::size_t size) const;
+	void set_element(unsigned int* elements, std::size_t size) const;
+private:
+	unsigned int m_VbId, m_EbId;
 };
 
 #endif

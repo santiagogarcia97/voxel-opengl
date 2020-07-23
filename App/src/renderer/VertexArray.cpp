@@ -2,18 +2,18 @@
 
 VertexArray::VertexArray()
 {
-	glGenVertexArrays(1, &m_ID);
+	glGenVertexArrays(1, &m_Id);
 	this->bind();
 }
 
 VertexArray::~VertexArray()
 {
-	glDeleteVertexArrays(1, &m_ID);
+	glDeleteVertexArrays(1, &m_Id);
 }
 
-void VertexArray::bind()
+void VertexArray::bind() const
 {
-	glBindVertexArray(m_ID);
+	glBindVertexArray(m_Id);
 }
 
 void VertexArray::unbind()
@@ -21,7 +21,7 @@ void VertexArray::unbind()
 	glBindVertexArray(0);
 }
 
-void VertexArray::addAttrib(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer)
+void VertexArray::add_attrib(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer) const
 {
 	this->bind();
 	glVertexAttribPointer(index, size, type, normalized, stride, pointer);

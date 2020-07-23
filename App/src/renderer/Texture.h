@@ -8,10 +8,10 @@
 class Texture
 {
 public:
-	Texture(const char* textPath);
-	void bind();
+	Texture(const char* text_path);
+	void bind() const;
 private:
-	unsigned int m_ID;
+	unsigned int m_Id;
 	int m_Width, m_Height, m_NrChannels;
 };
 
