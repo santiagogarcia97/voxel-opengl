@@ -3,7 +3,7 @@
 VertexArray::VertexArray()
 {
 	glGenVertexArrays(1, &m_Id);
-	this->bind();
+	bind();
 }
 
 VertexArray::~VertexArray()
@@ -23,7 +23,7 @@ void VertexArray::unbind()
 
 void VertexArray::add_attrib(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer) const
 {
-	this->bind();
+	bind();
 	glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 	glEnableVertexAttribArray(index);
 }

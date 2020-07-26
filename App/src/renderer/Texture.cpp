@@ -1,5 +1,9 @@
 #include "Texture.h"
 
+#include <glad/glad.h>
+#include <iostream>
+#include <stb_image.h>
+
 Texture::Texture(const char* text_path)
 {
     glGenTextures(1, &m_Id);

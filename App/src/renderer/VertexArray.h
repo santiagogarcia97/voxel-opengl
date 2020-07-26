@@ -11,6 +11,7 @@ public:
 	void bind() const;
 	static void unbind();
 	void add_attrib(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer) const;
+	
 private:
 	unsigned int m_Id;
 };

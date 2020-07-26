@@ -1,5 +1,7 @@
 #include "Buffer.h"
 
+#include <glad/glad.h>
+
 Buffer::Buffer()
 {
 	glGenBuffers(1, &m_VbId);

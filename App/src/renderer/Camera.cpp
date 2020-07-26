@@ -1,73 +1,74 @@
 #include "Camera.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-	: Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY)
+Camera::Camera(glm::vec3 pos, glm::vec3 up)
+    : movementSpeed(SPEED)
+	, mouseSensitivity(SENSITIVITY)
 {
-    Position = position;
-    WorldUp = up;
-    Yaw = yaw;
-    Pitch = pitch;
-    updateCameraVectors();
+    position = pos;
+    orientation = glm::quat(0, 0, 0, -1);
+    rightAngle = 0.f;
+    upAngle = 0.f;
+    update_camera_vectors();
 }
 
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
-	: Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY)
+Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ)
+    : movementSpeed(SPEED)
+	, mouseSensitivity(SENSITIVITY)
 {
-    Position = glm::vec3(posX, posY, posZ);
-    WorldUp = glm::vec3(upX, upY, upZ);
-    Yaw = yaw;
-    Pitch = pitch;
-    updateCameraVectors();
+    position = glm::vec3(posX, posY, posZ);
+    orientation = glm::quat(0, 0, 0, -1);
+    rightAngle = 0.f;
+    upAngle = 0.f;
+    update_camera_vectors();
 }
 
-glm::mat4 Camera::GetViewMatrix()
+glm::mat4 Camera::GetViewMatrix() const
 {
-    return glm::lookAt(Position, Position + Front, Up);
+    glm::quat reverseOrient = glm::conjugate(orientation);
+    glm::mat4 rot = glm::mat4_cast(reverseOrient);
+    glm::mat4 translation = glm::translate(glm::mat4(1.0), -position);
+
+    return rot * translation;
 }
 
-void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+void Camera::process_keyboard(Camera_Movement direction, float deltaTime)
 {
-    float velocity = MovementSpeed * deltaTime;
+    float velocity = movementSpeed * deltaTime;
+
+    glm::quat qF = orientation * glm::quat(0, 0, 0, -1) * glm::conjugate(orientation);
+    glm::vec3 Front = { qF.x, qF.y, qF.z };
+    glm::vec3 Right = glm::normalize(glm::cross(Front, glm::vec3(0, 1, 0)));
+
     if (direction == FORWARD)
-        Position += Front * velocity;
+        position += Front * velocity;
     if (direction == BACKWARD)
-        Position -= Front * velocity;
+        position -= Front * velocity;
     if (direction == LEFT)
-        Position -= Right * velocity;
+        position -= Right * velocity;
     if (direction == RIGHT)
-        Position += Right * velocity;
+        position += Right * velocity;
 }
 
-void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
+void Camera::process_mouse_movement(float xoffset, float yoffset, bool constrainPitch)
 {
-    xoffset *= MouseSensitivity;
-    yoffset *= MouseSensitivity;
+	// TODO implement constrainPitch for quaternion camera
+	
+    xoffset *= mouseSensitivity;
+    yoffset *= mouseSensitivity;
 
-    Yaw += xoffset;
-    Pitch += yoffset;
+    rightAngle += xoffset;
+    upAngle += yoffset;
 
-    // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (constrainPitch)
-    {
-        if (Pitch > 89.0f)
-            Pitch = 89.0f;
-        if (Pitch < -89.0f)
-            Pitch = -89.0f;
-    }
-
-    // update Front, Right and Up Vectors using the updated Euler angles
-    updateCameraVectors();
+    update_camera_vectors();
 }
 
-void Camera::updateCameraVectors()
+void Camera::update_camera_vectors()
 {
-    // calculate the new Front vector
-    glm::vec3 front;
-    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    front.y = sin(glm::radians(Pitch));
-    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    Front = glm::normalize(front);
-    // also re-calculate the Right and Up vector
-    Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    Up = glm::normalize(glm::cross(Right, Front));
+    // Yaw
+    glm::quat aroundY = glm::angleAxis(glm::radians(-rightAngle), glm::vec3(0, 1, 0));
+
+    // Pitch
+    glm::quat aroundX = glm::angleAxis(glm::radians(upAngle), glm::vec3(1, 0, 0));
+
+    orientation = aroundY * aroundX;
 }
