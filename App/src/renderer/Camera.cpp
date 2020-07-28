@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(glm::vec3 pos, glm::vec3 up)
+Camera::Camera(glm::vec3 pos)
     : movementSpeed(SPEED)
 	, mouseSensitivity(SENSITIVITY)
 {
@@ -11,7 +11,7 @@ Camera::Camera(glm::vec3 pos, glm::vec3 up)
     update_camera_vectors();
 }
 
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ)
+Camera::Camera(float posX, float posY, float posZ)
     : movementSpeed(SPEED)
 	, mouseSensitivity(SENSITIVITY)
 {
@@ -31,7 +31,7 @@ glm::mat4 Camera::GetViewMatrix() const
     return rot * translation;
 }
 
-void Camera::process_keyboard(Camera_Movement direction, float deltaTime)
+void Camera::process_keyboard(CamMov direction, float deltaTime)
 {
     float velocity = movementSpeed * deltaTime;
 
@@ -39,13 +39,13 @@ void Camera::process_keyboard(Camera_Movement direction, float deltaTime)
     glm::vec3 Front = { qF.x, qF.y, qF.z };
     glm::vec3 Right = glm::normalize(glm::cross(Front, glm::vec3(0, 1, 0)));
 
-    if (direction == FORWARD)
+    if (direction == CamMov::FORWARD)
         position += Front * velocity;
-    if (direction == BACKWARD)
+    if (direction == CamMov::BACKWARD)
         position -= Front * velocity;
-    if (direction == LEFT)
+    if (direction == CamMov::LEFT)
         position -= Right * velocity;
-    if (direction == RIGHT)
+    if (direction == CamMov::RIGHT)
         position += Right * velocity;
 }
 

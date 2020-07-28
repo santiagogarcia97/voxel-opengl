@@ -28,13 +28,13 @@ inline void key_callback(GLFWwindow* window, const int key, int scancode, const 
     }
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.process_keyboard(FORWARD, deltaTime);
+        camera.process_keyboard(CamMov::FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.process_keyboard(BACKWARD, deltaTime);
+        camera.process_keyboard(CamMov::BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.process_keyboard(LEFT, deltaTime);
+        camera.process_keyboard(CamMov::LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.process_keyboard(RIGHT, deltaTime);
+        camera.process_keyboard(CamMov::RIGHT, deltaTime);
 }
 
 inline void mouse_callback(GLFWwindow* window, const double xpos, const double ypos)

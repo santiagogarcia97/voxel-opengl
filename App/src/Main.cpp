@@ -40,7 +40,7 @@ int main()
     vao.add_attrib(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     // color attribute
     vao.add_attrib(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-
+	
     while (!glfwWindowShouldClose(ctx.get_window()))
     {
 
