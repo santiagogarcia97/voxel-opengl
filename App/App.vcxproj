@@ -91,6 +91,7 @@
     <ClCompile Include="dependencies\glad\src\glad.c" />
     <ClCompile Include="dependencies\glm\detail\glm.cpp" />
     <ClCompile Include="dependencies\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Context.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\renderer\Buffer.cpp" />
@@ -387,6 +388,7 @@
     <ClInclude Include="dependencies\glm\vec4.hpp" />
     <ClInclude Include="dependencies\glm\vector_relational.hpp" />
     <ClInclude Include="dependencies\stb_image\stb_image.h" />
+    <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Context.h" />
     <ClInclude Include="src\MockData.h" />
     <ClInclude Include="src\renderer\Buffer.h" />

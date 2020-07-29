@@ -12,7 +12,6 @@ float lastX = 800 / 2.0f;
 float lastY = 600 / 2.0f;
 bool firstMouse = true;
 
-extern double deltaTime;
 
 inline void key_callback(GLFWwindow* window, const int key, int scancode, const int action, int mode)
 {
@@ -28,13 +27,13 @@ inline void key_callback(GLFWwindow* window, const int key, int scancode, const 
     }
 
     if (key == GLFW_KEY_W)
-        camera.process_keyboard(CamMov::FORWARD, deltaTime);
+        camera.process_keyboard(CamMov::FORWARD, Application::deltaTime);
     if (key == GLFW_KEY_S)
-        camera.process_keyboard(CamMov::BACKWARD, deltaTime);
+        camera.process_keyboard(CamMov::BACKWARD, Application::deltaTime);
     if (key == GLFW_KEY_A)
-        camera.process_keyboard(CamMov::LEFT, deltaTime);
+        camera.process_keyboard(CamMov::LEFT, Application::deltaTime);
     if (key == GLFW_KEY_D)
-        camera.process_keyboard(CamMov::RIGHT, deltaTime);
+        camera.process_keyboard(CamMov::RIGHT, Application::deltaTime);
 }
 
 inline void mouse_callback(GLFWwindow* window, const double xpos, const double ypos)
