@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Timer.h"
 #include "renderer/Camera.h"
 
 bool WIREFRAME = false;
@@ -12,6 +13,7 @@ float lastX = 800 / 2.0f;
 float lastY = 600 / 2.0f;
 bool firstMouse = true;
 
+Timer timer;
 
 inline void key_callback(GLFWwindow* window, const int key, int scancode, const int action, int mode)
 {
@@ -27,13 +29,13 @@ inline void key_callback(GLFWwindow* window, const int key, int scancode, const 
     }
 
     if (key == GLFW_KEY_W)
-        camera.process_keyboard(CamMov::FORWARD, Application::deltaTime);
+        camera.process_keyboard(CamMov::FORWARD, timer.get_deltatime());
     if (key == GLFW_KEY_S)
-        camera.process_keyboard(CamMov::BACKWARD, Application::deltaTime);
+        camera.process_keyboard(CamMov::BACKWARD, timer.get_deltatime());
     if (key == GLFW_KEY_A)
-        camera.process_keyboard(CamMov::LEFT, Application::deltaTime);
+        camera.process_keyboard(CamMov::LEFT, timer.get_deltatime());
     if (key == GLFW_KEY_D)
-        camera.process_keyboard(CamMov::RIGHT, Application::deltaTime);
+        camera.process_keyboard(CamMov::RIGHT, timer.get_deltatime());
 }
 
 inline void mouse_callback(GLFWwindow* window, const double xpos, const double ypos)

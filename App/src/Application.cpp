@@ -6,9 +6,7 @@
 Application::Application()
 	: triangleShader("Triangle")
 	, tex1("res/tex1.png")
-	, lastFrameTime(0), previousFPSTime(0), frameCount(0)
 {
-
     ctx.set_key_callback(key_callback);
     ctx.set_cursor_callback(mouse_callback);
 
@@ -29,18 +27,7 @@ int Application::run()
 	// Game loop
     while (!glfwWindowShouldClose(ctx.get_window()))
     {
-        const auto currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrameTime;
-        lastFrameTime = currentFrame;
-
-        frameCount++;
-        if (currentFrame - previousFPSTime >= 1.0)
-        {
-            std::cout << "FPS: " << frameCount / (currentFrame - previousFPSTime) << std::endl;
-
-            frameCount = 0;
-            previousFPSTime = currentFrame;
-        }
+        timer.update();
 
         glfwPollEvents();
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

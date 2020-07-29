@@ -396,6 +396,7 @@
     <ClInclude Include="src\renderer\Texture.h" />
     <ClInclude Include="src\renderer\VertexArray.h" />
     <ClInclude Include="src\renderer\Shader.h" />
+    <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\UserInput.h" />
   </ItemGroup>
   <ItemGroup>
