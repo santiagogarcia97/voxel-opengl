@@ -941,6 +941,9 @@
     <ClInclude Include="src\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dependencies\assimp\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dependencies\glfw\lib-vc2019\glfw3.dll" />
@@ -1354,6 +1357,7 @@
     </None>
     <None Include="res\shaders\Triangle.frag" />
     <None Include="res\shaders\Triangle.vert" />
+    <None Include="dependencies\assimp\assimp-vc142-mt.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\glfw\lib-vc2019\glfw3.lib" />
