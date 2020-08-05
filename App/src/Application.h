@@ -12,6 +12,7 @@
 #include "renderer/Texture.h"
 #include "renderer/VertexArray.h"
 #include "renderer/Buffer.h"
+#include "renderer/Model.h"
 
 class Application
 {
