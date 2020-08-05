@@ -8,7 +8,7 @@ class Buffer
 public:
 	Buffer();
 	~Buffer();
-	void set_vertex(float* vertex, std::size_t size) const;
+	void set_vertex(void* vertex, std::size_t size) const;
 	void set_element(unsigned int* elements, std::size_t size) const;
 	
 private:

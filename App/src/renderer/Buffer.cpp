@@ -14,7 +14,7 @@ Buffer::~Buffer()
 	glDeleteBuffers(1, &m_EbId);
 }
 
-void Buffer::set_vertex(float *vertex, std::size_t size) const
+void Buffer::set_vertex(void *vertex, std::size_t size) const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_VbId);
 
